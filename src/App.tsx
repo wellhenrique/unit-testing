@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
+  const [list, setList] = useState(["Banana", "Peapple", " Pear", "Grape"]);
+  const [newItem, setNewItem] = useState("");
+
+  function addToList() {
+    setTimeout(() => {
+      setList((state) => [...state, newItem]);
+    }, 500);
+  }
+
+  function removeFromList(item: string) {
+    setList((state) => state.filter((opns) => opns !== item));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <input
+        type="text"
+        placeholder="New Item"
+        value={newItem}
+        onChange={(e) => setNewItem(e.target.value)}
+      />
+      <button onClick={addToList}>Add</button>
+      <br />
+      <ul>
+        {list.map((item) => (
+          <li key={item}>
+            <span>{item}</span>
+            <button onClick={() => removeFromList(item)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
